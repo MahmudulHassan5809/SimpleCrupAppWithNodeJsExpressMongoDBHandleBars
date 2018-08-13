@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 
+
 //Load Helpers
 const {ensureAuthenticated} = require('../helpers/auth');
 
@@ -15,18 +16,40 @@ module.exports = router;
 
 //Idea Index Page
 router.get('/',ensureAuthenticated,(req , res) => {
+
    Idea.find({user: req.user.id})
     .sort({date:'desc'})
     .then(ideas => {
       res.render('ideas/index' , {
-      	ideas: ideas
+      	ideas: ideas,
+
       });
     })
 
 });
 
+// router.get('/:page', function(req, res, next) {
+//     var perPage = 1
+//     var page = req.params.page || 1
+
+//     Idea
+//     .find({user: req.user.id})
+//     .skip((perPage * page) - perPage)
+//     .limit(perPage)
+//     .exec(function(err, ideas) {
+//         Idea.count().exec(function(err, count) {
+//             if (err) return next(err)
+//             res.render('ideas/index', {
+//                 ideas: ideas,
+//                 current: page,
+//                 pages: Math.ceil(count / perPage)
+//             })
+//         })
+//     })
+// })
+
 //Add Idea Form
-router.get('/add',ensureAuthenticated,(req , res) => {
+router.get('/i/add',ensureAuthenticated,(req , res) => {
    //res.send('About');
    res.render('ideas/add');
 });

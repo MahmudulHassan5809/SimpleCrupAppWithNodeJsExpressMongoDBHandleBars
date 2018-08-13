@@ -1,0 +1,20 @@
+<ul>
+  {{#if (PagesGreaterThanZero pages) }}
+    {{#if (HasNext pages)}}
+      <li>
+        <a href="/ideas/{{NextPage current}}">Next</a>
+      </li>
+    {{/if}}
+    {{#each (ForLoop pages current) }}
+      <li>
+       <a href="/ideas/{{ForLoop pages current}}">{{ForLoop pages current}}</a>
+      </li>
+    {{/each}}
+    {{#if (HasPre)}}
+      <li>
+       <a href="/ideas/{{PrePage current}}">Previous</a>
+      </li>
+    {{/if}}
+    {{/if}}
+
+</ul>

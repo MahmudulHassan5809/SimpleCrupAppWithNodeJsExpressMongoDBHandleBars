@@ -8,6 +8,7 @@ const session = require('express-session');
 const passport = require('passport');
 const flash = require('connect-flash');
 
+
 const app = express();
 
 //Load Routes
@@ -24,12 +25,26 @@ const db = require('./config/database');
 //Map Gloabal Promise -get rid of warning
 mongoose.Promise = global.Promise;
 
+//HandleBars helpers
+// const {
+//  PagesGreaterThanZero,
+//  CurrentPage,
+//  NextPage,
+//  PrePage,
+//  HasNext,
+//  ForLoop,
+//  HasPre
+// } = require('./helpers/hbs');
+
+
 //Connect To Mongoose
 mongoose.connect(db.mongoURI,{
     useNewUrlParser: true
 })
 .then(() => { console.log('mongodb Connected');})
 .catch(err => console.log(err));
+
+
 
 
 
@@ -41,7 +56,18 @@ mongoose.connect(db.mongoURI,{
 // })
 
 //HandleBars MiddleWare
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', exphbs({
+  // helpers:{
+  //   PagesGreaterThanZero : PagesGreaterThanZero,
+  //   CurrentPage : CurrentPage,
+  //   NextPage: NextPage,
+  //   PrePage : PrePage,
+  //   HasNext: HasNext,
+  //   ForLoop: ForLoop,
+  //   HasPre: HasPre
+  // },
+  defaultLayout: 'main'
+}));
 app.set('view engine', 'handlebars');
 
 
